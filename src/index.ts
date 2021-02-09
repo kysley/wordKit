@@ -1,2 +1,2 @@
-export * from './seedNumbers';
-export * from './grabWords';
+export * from './seed';
+export * from './kit';
