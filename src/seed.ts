@@ -1,12 +1,19 @@
 import {isNil} from './utils/isNotNil';
 
 function processSeed(seed: string | number) {
-  return String(seed)
+  const decimalSeed = String(seed)
     .split('')
     .reduce((acc, char) => {
       acc += (char.charCodeAt(0) / 100) * (acc || 1);
       return acc;
     }, 0);
+
+  return Number(
+    decimalSeed
+      .toString()
+      .replace('.', '')
+      .slice(0, 10),
+  );
 }
 
 type SeedOptions = {
