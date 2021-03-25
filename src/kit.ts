@@ -10,11 +10,13 @@ import {seed} from './seed';
 //   return word[0].toUpperCase() + word.slice(1);
 // }
 
+const words2Length = words2.length;
+
 export function words(count: number, s?: string | number) {
   const pool: string[] = [];
   const gen = new seed({seed: s});
   for (let i = 0; i < count; i++) {
-    const idx = gen.intBetween(0, words2.length);
+    const idx = gen.intBetween(0, words2Length);
     pool.push(words2[idx]);
   }
   return pool.join(',');
