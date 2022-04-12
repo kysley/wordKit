@@ -1,5 +1,5 @@
 import {words2} from './utils/words';
-import {seed} from './seed';
+import {seeder} from './seed';
 
 // function getLastCharacter(word: string) {
 //   const length = word.length;
@@ -10,11 +10,11 @@ import {seed} from './seed';
 //   return word[0].toUpperCase() + word.slice(1);
 // }
 
-export function words(count: number, s?: string | number) {
+export function getWords(amount: number, seed?: string | number) {
   const pool: string[] = [];
-  const gen = new seed({seed: s});
-  for (let i = 0; i < count; i++) {
-    const idx = gen.intBetween(0, words2.length);
+  const gen = new seeder({seed});
+  for (let i = 0; i < amount; i++) {
+    const idx = gen.between(0, words2.length);
     pool.push(words2[idx]);
   }
   return pool.join(',');

@@ -13,7 +13,7 @@ type SeedOptions = {
   seed?: string | number;
 };
 
-export class seed {
+export class seeder {
   _mz: number;
   _mw: number;
   _seed?: number;
@@ -47,8 +47,6 @@ export class seed {
     this._mw = mw;
 
     let r = ((mz << 16) + (mw & 65535)) >>> 0;
-    // const x = (((mz << 16) + mw) & 0xffffffff) / 0x100000000;
-    // return 0.5 + x;
     return (r /= 4294967296);
   }
 
@@ -56,11 +54,11 @@ export class seed {
     return `${this._mw}:${this._mz}:${this._seed}`;
   }
 
-  intBetween(min: number, max: number) {
+  between(min: number, max: number) {
     return Math.floor(this.random() * (max - min + 1)) + min;
   }
 
-  roll() {
+  next() {
     return this.random();
   }
 }
