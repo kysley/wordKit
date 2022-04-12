@@ -9,12 +9,13 @@ import {seeder} from './seed';
 // function capitalize(word: string) {
 //   return word[0].toUpperCase() + word.slice(1);
 // }
+const words2Length = words2.length;
 
 export function getWords(amount: number, seed?: string | number) {
   const pool: string[] = [];
   const gen = new seeder({seed});
   for (let i = 0; i < amount; i++) {
-    const idx = gen.between(0, words2.length);
+    const idx = gen.between(0, words2Length);
     pool.push(words2[idx]);
   }
   return pool.join(',');
