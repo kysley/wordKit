@@ -1,12 +1,8 @@
-import {isNil} from './utils/isNotNil';
-
-function processSeed(seed: string | number) {
-  const decimalSeed = String(seed)
-    .split('')
-    .reduce((acc, char) => {
-      acc += (char.charCodeAt(0) / 100) * (acc || 1);
-      return acc;
-    }, 0);
+function processSeed(seed: string) {
+  const decimalSeed = seed.split('').reduce((acc, char) => {
+    acc += (char.charCodeAt(0) / 100) * (acc || 1);
+    return acc;
+  }, 0);
 
   return Number(
     decimalSeed
@@ -17,32 +13,29 @@ function processSeed(seed: string | number) {
 }
 
 type SeedOptions = {
-  seed?: string | number;
+  seed?: string;
 };
 
-export class seeder {
+export class Seed {
   _mz: number;
   _mw: number;
-  _seed?: number;
-  upperBound?: number;
-  lowerBound?: number;
+  _seed: number;
+  public providedSeed?: string;
 
-  constructor(opts: SeedOptions) {
+  constructor(opts: SeedOptions = {}) {
     this._mz = 987654321;
     this._mw = 123456789;
-    this.setSeed(opts?.seed);
-  }
 
-  setSeed(seedToSet?: string | number) {
-    const seed = !isNil(seedToSet)
-      ? processSeed(seedToSet!)
-      : this.randomSeed();
+    const seed = opts?.seed ? processSeed(opts.seed) : this.randomSeed;
+
+    this.providedSeed = opts.seed;
+
     this._mw = (123456789 + seed) & 0xffffffff;
     this._mz = (987654321 - seed) & 0xffffffff;
     this._seed = seed;
   }
 
-  randomSeed() {
+  get randomSeed() {
     return 1 + Math.floor(Math.random() * 0xffffffff);
   }
 
@@ -57,8 +50,12 @@ export class seeder {
     return (r /= 4294967296);
   }
 
-  getState() {
-    return `${this._mw}:${this._mz}:${this._seed}`;
+  get state() {
+    return {
+      _mw: this._mw,
+      _mz: this._mz,
+      _seed: this._seed,
+    };
   }
 
   between(min: number, max: number) {
