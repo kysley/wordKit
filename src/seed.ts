@@ -20,7 +20,7 @@ export class Seed {
   _mz: number;
   _mw: number;
   _seed: number;
-  public providedSeed?: string;
+  providedSeed?: string;
 
   constructor(opts: SeedOptions = {}) {
     this._mz = 987654321;
@@ -39,7 +39,7 @@ export class Seed {
     return 1 + Math.floor(Math.random() * 0xffffffff);
   }
 
-  private random() {
+  random() {
     let mz = (36969 * (this._mz & 65535) + (this._mz >> 16)) & 0xffffffff;
     let mw = (18000 * (this._mw & 65535) + (this._mw >> 16)) & 0xffffffff;
 
